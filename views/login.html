@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p>Welcome to {{title}}</p>
+<form method="POST">
+	<label for="Email">Email:</label>
+	<input type="text" name="Email">
+	<label for="Password">Password:</label>
+	<input type="password" name="Password">
+	<input type="submit" value="Login">
+</form>
+<ul>
+	<li><a href="forgotPassword">ForgotPassword ?</a></li>
+	<li><a href="register">Register</a></li>
+</ul>
+{% endblock %}

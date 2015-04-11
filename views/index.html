@@ -9,6 +9,7 @@
    	<p><a href="#">{{ post.title }}</a></p>
    	<p><a href="#">{{ post.name }}</a></p>
    	<p><a href="#">{{ post.time.minute }}</a></p>
+   	<p>{% autoescape false %}{{ post.post }}{% endautoescape %}</p>
    </li>
 {% endfor %}
 </ul>

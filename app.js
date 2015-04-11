@@ -1,6 +1,7 @@
 var express = require('express');
 var path = require('path');
 var swig = require('swig');
+var multer = require('multer');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -19,6 +20,8 @@ var app = express();
 app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+app.set('view catch', false);
+app.set('view autoescape', false);
 app.use(flash());
 
 // uncomment after placing your favicon in /public
@@ -28,6 +31,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
+app.use(multer({
+  dest: './public/images',
+  rename: function(fieldname, filename) {
+    return filename;
+  }
+}));
+
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 

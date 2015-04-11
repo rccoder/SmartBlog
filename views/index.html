@@ -3,4 +3,13 @@
 {% block content %}
 <p>Welcome to {{title}}</p>
 
+<ul>
+{% for post in posts %}
+   <li>
+   	<p><a href="#">{{ post.title }}</a></p>
+   	<p><a href="#">{{ post.name }}</a></p>
+   	<p><a href="#">{{ post.time.minute }}</a></p>
+   </li>
+{% endfor %}
+</ul>
 {% endblock %}

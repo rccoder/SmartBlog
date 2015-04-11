@@ -9,7 +9,18 @@
     <header>
         
     </header>
+    <nav>
+    	{% if success %}
+    		{{success}}
+    	{% endif %}
+    	{% if error %}
+    		{{error}}
+    	{% endif %}
+    </nav>
     <div class="content">
+    	{% if user %}
+    	<a href="logout">登出</a>
+    	{% endif %}
         {% block content %}{% endblock %}
     </div>
     <footer>

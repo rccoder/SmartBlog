@@ -6,6 +6,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var settings = require('./settings');
+var flash = require('connect-flash');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
@@ -18,6 +19,7 @@ var app = express();
 app.engine('html', swig.renderFile);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+app.use(flash());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
@@ -26,9 +28,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', routes);
-app.use('/users', users);
 
 app.use(session({
   secret: settings.cookieSecret,
@@ -42,6 +41,10 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
+
+
+app.use('/', routes);
+app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

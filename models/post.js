@@ -19,13 +19,13 @@ Post.prototype.save = function(callback) {
 		minute: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
 			date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
 	};
-
 	var post = {
 		name: this.name,
-		time: this.time,
+		time: time,
 		title: this.title,
 		post: this.post
 	};
+	console.log(post.time);
 	mongodb.open(function(err, db) {
 		if (err) {
 			return callback(err);
@@ -96,6 +96,7 @@ Post.getOne = function(name, day, title, callback) {
 			}, function(err, doc) {
 				mongodb.close();
 				if(err) {
+					mongodb.close();
 					return callback(err);
 				}
 				doc.post = markdown.toHTML(doc.post);

@@ -5,7 +5,6 @@
 <a href="/upload">上传图片</a>
 <a href="/post">发表文章</a>
 <ul>
-{% for post in posts %}
    <li>
    	<p>
    		<h2><a href="/u/{{ post.name }}/{{ post.time.day }}/{{ post.title }}">{{ post.title }}</a></h2>
@@ -17,6 +16,5 @@
    	<p><a href="#">{{ post.time.minute }}</a></p>
    	<p>{{ post.post }}</p>
    </li>
-{% endfor %}
 </ul>
 {% endblock %}

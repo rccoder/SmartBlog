@@ -7,8 +7,13 @@
 <ul>
 {% for post in posts %}
    <li>
-   	<p><a href="#">{{ post.title }}</a></p>
-   	<p><a href="#">{{ post.name }}</a></p>
+   	<p>
+   		<h2><a href="/u/{{ post.name }}/{{ post.time.day }}/{{ post.title }}">{{ post.title }}</a></h2>
+   	</p>
+   	<p>
+   		<span>Author:</span>
+   		<a href="/u/{{ post.name }}">{{ post.name }}</a>
+   	</p>
    	<p><a href="#">{{ post.time.minute }}</a></p>
    	<p>{{ post.post }}</p>
    </li>

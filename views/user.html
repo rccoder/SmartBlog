@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p>Welcome to {{title}}</p>
+<a href="/upload">上传图片</a>
+<a href="/post">发表文章</a>
+<ul>
+{% for post in posts %}
+   <li>
+   	<p><a href="#">{{ post.title }}</a></p>
+   	<p><a href="#">{{ post.name }}</a></p>
+   	<p><a href="#">{{ post.time.minute }}</a></p>
+   	<p>{{ post.post }}</p>
+   </li>
+{% endfor %}
+</ul>
+{% endblock %}

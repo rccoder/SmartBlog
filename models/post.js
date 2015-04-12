@@ -77,3 +77,30 @@ Post.get = function(name, callback) {
 		});
 	});
 };
+
+Post.getOne = function(name, day, title, callback) {
+	mongodb.open(function(err, db) {
+		if(err) {
+			mongodb.close();
+			return callback(err);
+		}
+		db.collection('posts', function(err, collection) {
+			if(err) {
+				mongodb.close();
+				return callback(err);
+			}
+			collection.findOne({
+				"name": name,
+				"time.day": day,
+				"title": title
+			}, function(err, doc) {
+				mongodb.close();
+				if(err) {
+					return callback(err);
+				}
+				doc.post = markdown.toHTML(doc.post);
+				callback(null, doc);
+			});
+		});
+	});
+};

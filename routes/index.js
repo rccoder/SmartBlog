@@ -134,6 +134,27 @@ router.post('/upload', function(req, res, next) {
 	req.flash('success', 'Upload success!');
 	res.redirect('/upload');
 })
+router.get('/u/:name', function(req, res) {
+	User.get(req.params.name, function(err, user) {
+		if(!user) {
+			req.flash('error', '用户不存在');
+			return res.redirect('/');
+		}
+		Post.get(user.name, function(err, posts) {
+			if(err) {
+				req.flash('error', err);
+				return res.redirect('/');
+			}
+			res.render('user', {
+				title: user.name,
+				posts: posts,
+				user: req.session.user,
+				success: req.flash('success').toString(),
+				error: req.flash('error').toString()
+			});
+		});
+	});
+});
 function checkLogin(req, res, next) {
 	if (!req.session.user) {
 		req.flash('error', '未登录');

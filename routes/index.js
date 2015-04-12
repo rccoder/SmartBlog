@@ -170,6 +170,24 @@ router.get('/u/:name/:day/:title', function(req, res) {
 		});
 	});
 });
+router.get('/edit/:name/:day/:title', checkLogin);
+router.get('/edit/:name/:day/:title', function(req, res) {
+	var currentUser = req.session.user;
+	Post.edit(req.params.name, req.params.day, req.params.title, function(err, post) {
+		if(err) {
+			req.flash('error', err);
+			return res.redirect(back);
+		}
+		console.log(post);
+		res.render('edit', {
+			title: 'Edit',
+			post: post,
+			user: req.session.user,
+			success: req.flash('success').toString(),
+			error: req.flash('error').toString()
+		});
+	});
+});
 function checkLogin(req, res, next) {
 	if (!req.session.user) {
 		req.flash('error', '未登录');

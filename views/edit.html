@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p>Welcome to {{title}}</p>
+<form method="post">
+	标题<br>
+	<input type="text" name="title" value="{{ post.title }}"><br>
+	正文<br>
+	<textarea type="text" name="post" value="{{ post.post }}"></textarea><br>
+	<input type="submit" value="发表">
+</form>
+<ul>
+	<li><a href="forgotPassword">ForgotPassword ?</a></li>
+	<li><a href="register">Register</a></li>
+</ul>
+{% endblock %}

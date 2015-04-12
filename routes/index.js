@@ -120,7 +120,20 @@ router.get('/logout', function(req, res, next) {
 	req.flash('success', '登出成功');
 	res.redirect('/');
 });
-
+router.get('/upload', checkLogin);
+router.get('/upload', function(req, res) {
+	res.render('upload', {
+		title: 'Upload',
+		user: req.session.user,
+		success: req.flash('success').toString(),
+		error: req.flash('error').toString()
+	});
+});
+router.post('/upload', checkLogin);
+router.post('/upload', function(req, res, next) {
+	req.flash('success', 'Upload success!');
+	res.redirect('/upload');
+})
 function checkLogin(req, res, next) {
 	if (!req.session.user) {
 		req.flash('error', '未登录');

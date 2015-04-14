@@ -7,6 +7,7 @@ var router = express.Router();
 // Auth
 router.use(function(req, res, next) {
   var needLogin = ['/post', '/logout', '/upload', '/edit', '/u'];
+  var skipIfLoggedIn = ['/login', '/reg'];
   if (needLogin.indexOf(req.path) > -1) {
     if (!req.session.user) {
       req.flash('error', '未登录');
@@ -14,7 +15,7 @@ router.use(function(req, res, next) {
     } else {
     	next();
     }
-  } else if (['/login', '/reg'].indexOf(req.path) > -1) {
+  } else if (skipIfLoggedIn.indexOf(req.path) > -1) {
     if (req.session.user) {
       req.flash('error', '已经登录');
       res.redirect('back');

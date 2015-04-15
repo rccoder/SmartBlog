@@ -6,7 +6,7 @@ var router = express.Router();
 
 // Auth
 router.use(function(req, res, next) {
-  var needLogin = ['/post', '/logout', '/upload', '/edit', '/u'];
+  var needLogin = ['/post', '/logout', '/upload', '/edit', '/u', '/delete'];
   var skipIfLoggedIn = ['/login', '/reg'];
   if (needLogin.indexOf(req.path) > -1) {
     if (!req.session.user) {
@@ -33,6 +33,7 @@ router.get('/', function(req, res, next) {
     if (err) {
       posts = [];
     }
+    //console.log(req.session.user);
     res.render('index', {
       title: 'Home',
       user: req.session.user,
@@ -114,6 +115,7 @@ router.post('/login', function(req, res) {
       return res.redirect('/login');
     }
     req.session.user = user;
+    console.log(req.session.user);
     req.flash('success', '登录成功');
     res.redirect('/');
   });
@@ -206,12 +208,11 @@ router.get('/u/:name/:day/:title', function(req, res) {
 // Edit
 router.get('/edit/:name/:day/:title', function(req, res) {
   var currentUser = req.session.user;
-  Post.edit(req.params.name, req.params.day, req.params.title, function(err, post) {
+  Post.edit(currentUser.name, req.params.day, req.params.title, function(err, post) {
     if(err) {
       req.flash('error', err);
       return res.redirect(back);
     }
-    console.log(post);
     res.render('edit', {
       title: 'Edit',
       post: post,
@@ -219,6 +220,20 @@ router.get('/edit/:name/:day/:title', function(req, res) {
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
     });
+  });
+});
+
+//Delete
+router.get('/delete/:name/:day/:title', function(req, res) {
+  var currentUser = req.session.user;
+  Post.delete(currentUser.name, req.params.day, req.params.title, function(err) {
+    if(err) {
+      req.flash('error', err);
+      return res.redirect('back');
+    }
+    req.flash('success', '删除成功');
+    console.log(currentUser);
+    res.redirect('/');
   });
 });
 

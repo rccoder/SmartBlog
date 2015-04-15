@@ -206,7 +206,7 @@ router.get('/u/:name/:day/:title', function(req, res) {
 });
 
 // Edit
-router.get('/edit/:name/:day/:title', function(req, res) {
+router.get('/edit/:name/:day/:title', function(req, res, next) {
   var currentUser = req.session.user;
   Post.edit(currentUser.name, req.params.day, req.params.title, function(err, post) {
     if(err) {
@@ -222,7 +222,18 @@ router.get('/edit/:name/:day/:title', function(req, res) {
     });
   });
 });
-
+router.post('/edit/:name/:day/:title', function(req, res) {
+  var currentUser = req.session.user;
+  Post.update(currentUser.name, req.params.day, req.params.title, req.body.post, function(err) {
+    var goUrl = encodeURI('/u/' + req.params.name + '/' + req.params.day + '/' + req.params.title);
+    if(err) {
+      req.flash('error', err);
+      return res.redirect(goUrl);
+    }
+    req.flash('success', "Edit Success!");
+    res.redirect(goUrl);
+  })
+})
 //Delete
 router.get('/delete/:name/:day/:title', function(req, res) {
   var currentUser = req.session.user;

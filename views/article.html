@@ -15,8 +15,10 @@
    	</p>
    	<p><a href="#">{{ post.time.minute }}</a></p>
       <p>
+         {% if (user && user.name == post.name) %}
          <span><a href="/edit/{{ post.name }}/{{ post.time.day }}/{{ post.title }}">Edit</a></span>
          <span><a href="/delete/{{ post.name }}/{{ post.time.day }}/{{ post.title }}">Delete</a></span>
+         {% endif %}
       </p>
    	<p>{{ post.post }}</p>
    </li>

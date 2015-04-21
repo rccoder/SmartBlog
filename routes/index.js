@@ -188,7 +188,16 @@ router.get('/u/:name', function(req, res) {
     });
   });
 });
+router.get('/d/:day', function(req, res) {
+  User.get(req.params.day, function(err, user) {
+    if(!user) {
+      req.flash('error', '日期错误');
+      return res.redirect('/');
+    }
+    Post.get()
 
+  })
+})
 router.get('/u/:name/:day/:title', function(req, res) {
   Post.getOne(req.params.name, req.params.day, req.params.title, function(err, post) {
     if(err) {
@@ -248,4 +257,7 @@ router.get('/delete/:name/:day/:title', function(req, res) {
   });
 });
 
+router.use(function (req, res) {
+    res.render("404");
+  });
 module.exports = router;

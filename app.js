@@ -6,6 +6,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var ueditor = require('ueditor');
 var flash = require('connect-flash');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
@@ -29,13 +30,32 @@ app.use(flash());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
 
 app.use(multer({
   dest: './public/images',
   rename: function(fieldname, filename) {
     return filename;
+  }
+}));
+
+app.use('/ueditor/ue', ueditor(path.join(__dirname, 'public'), function(res, req, next) {
+  if(req.query.action === 'uploadimage') {
+    var foo = req.ueditor;
+    var date = new Date();
+    var imagename = req.ueditor.filename;
+
+    var img_url = '/images/ueditor/';
+    req.ue_up(img_url);
+  }
+  else if(req.query.action === 'listimage') {
+    var die_url = '/images/ueditor/';
+    res.ue_list(die_url);
+  }
+  else {
+    res.setHeader('Content-Type', 'application/json');
+    res.redirect('/ueditor/ueditor.config.json')
   }
 }));
 

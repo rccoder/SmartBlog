@@ -1,6 +1,7 @@
 var crypto = require('crypto');
 var User = require('../models/user');
 var Post = require('../models/post');
+var Comment = require('../models/comment');
 var express = require('express');
 var router = express.Router();
 
@@ -211,9 +212,32 @@ router.get('/u/:name/:day/:title', function(req, res) {
       success: req.flash('success').toString(),
       error: req.flash('error').toString()
     });
+    //console.log(post);
+
   });
 });
-
+router.post('/u/:name/:day/:title', function(req, res) {
+  var date = new Date();
+  var time = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + 
+             date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+  var comment = {
+    name: req.body.name,
+    email: req.body.email,
+    url: req.body.url,
+    time: time,
+    content: req.body.content
+  };
+  //console.log(comment);
+  var newComment = new Comment(req.params.name, req.params.day, req.params.title, comment);
+  newComment.save(function(err) {
+    if(err) {
+      req.flash('error', '留言失败');
+      return res.redirect('back');
+    }
+    req.flash('success', '留言成功');
+    res.redirect('back');
+  })
+})
 // Edit
 router.get('/edit/:name/:day/:title', function(req, res, next) {
   var currentUser = req.session.user;

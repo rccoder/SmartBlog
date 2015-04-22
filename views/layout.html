@@ -5,7 +5,7 @@
     <title>{{title}}</title>
     
 </head>
-<body id="body"i>
+<body id="body">
     <header>
         
     </header>
@@ -22,6 +22,9 @@
     	<a href="logout">登出</a>
     	{% endif %}
         {% block content %}{% endblock %}
+    </div>
+    <div class="comment">
+        {% block comment %}{% endblock %}
     </div>
     <footer>
         

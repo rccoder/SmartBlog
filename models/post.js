@@ -1,5 +1,5 @@
 var mongodb = require('./db');
-//var markdown = require('markdown').markdown;
+var markdown = require('markdown').markdown;
 
 function Post(name, title, post) {
   this.name = name,
@@ -23,9 +23,10 @@ Post.prototype.save = function(callback) {
     name: this.name,
     time: time,
     title: this.title,
-    post: this.post
+    post: this.post,
+    comments: []
   };
-  console.log(post.time);
+  //console.log(post.time);
   mongodb.open(function(err, db) {
     if (err) {
       return callback(err);
@@ -100,6 +101,12 @@ Post.getOne = function(name, day, title, callback) {
           return callback(err);
         }
         //doc.post = markdown.toHTML(doc.post);
+        //console.log(doc.comments);
+        if(doc.comments) {
+          doc.comments.forEach(function (comment) {
+            comment.content = markdown.toHTML(comment.content);
+          });
+        }
         callback(null, doc);
       });
     });

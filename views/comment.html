@@ -1,0 +1,23 @@
+{% extends 'layout.html' %}
+{% block comment %}
+<div>
+	{% for pc in post.comments %}
+{{ pc.name }}
+{{ pc.time }}
+{{ pc.content }}
+	{% endfor %}
+</div>
+<form method="post">
+	{% if user %}
+		<label for="name">Name:</label>
+		<input type="text" name="name">
+		<label for="email">E-mail</label>
+		<input type="text" name="email">
+		<label for="url">Url:</label>
+		<input type="text" name="url">
+		<textarea name="content" id="content" cols="30" rosws="10"></textarea>
+		<input type="submit" value="post Comment">
+	{% endif %}
+</form>
+
+{% endblock %}

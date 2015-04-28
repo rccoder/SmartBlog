@@ -4,7 +4,7 @@ var markdown = require('markdown').markdown;
 function Post(name, title, post) {
   this.name = name,
   this.title = title,
-  this.post = post
+  this.post = post;
 }
 
 module.exports = Post;

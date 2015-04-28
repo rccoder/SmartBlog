@@ -4,8 +4,8 @@ function Comment(name, day, title, comment) {
   this.name = name,
   this.title = title,
   this.day = day,
-  this.comment = comment
-};
+  this.comment = comment;
+}
 
 module.exports = Comment;
 

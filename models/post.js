@@ -156,12 +156,13 @@ Post.edit = function(name, day, title, callback) {
   });
 };
 
-Post.update = function(name, day, title, post, callback) {
+Post.update = function(name, day, title, tags, post, callback) {
   mongodb.open(function(err, db) {
     if(err) {
       mongodb.close();
       return callback(err);
     }
+    console.log(tags);
     db.collection('posts', function(err, collection) {
       if(err) {
         mongodb.close();
@@ -172,7 +173,8 @@ Post.update = function(name, day, title, post, callback) {
         "time.day": day,
         "title": title
       }, {
-        $set: {post: post}
+        $set: {post: post},
+        $set: {tags: tags}
       }, function(err) {
         mongodb.close();
         if(err) {

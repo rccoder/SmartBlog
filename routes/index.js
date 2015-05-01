@@ -289,8 +289,8 @@ router.post('/edit/:name/:day/:title', function(req, res) {
     }
     req.flash('success', "Edit Success!");
     res.redirect(goUrl);
-  })
-})
+  });
+});
 //Delete
 router.get('/delete/:name/:day/:title', function(req, res) {
   var currentUser = req.session.user;
@@ -314,6 +314,22 @@ router.get('/tags', function(req, res) {
     res.render('tags', {
       title: 'Tags',
       tags: tags,
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
+  });
+});
+//Tag page
+router.get('/tags/:tag', function(req, res) {
+  Post.getTag(req.params.tag, function(err, posts) {
+    if(err) {
+      req.flash('error', err);
+      return res.redirect('/');
+    }
+    res.render('tag', {
+      title: 'Tags'+req.params.tag,
+      posts: posts,
       user: req.session.user,
       success: req.flash('success').toString(),
       error: req.flash('error').toString()

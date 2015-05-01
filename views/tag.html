@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+{% extends 'page.html' %}
+{% extends 'search.html' %}
+{% block content %}
+<p>Welcome to {{title}}</p>
+<a href="/upload">上传图片</a>
+<a href="/post">发表文章</a>
+<ul>
+{% for post in posts %}
+   <li>
+   	<p>
+   		<h2><a href="/u/{{ post.name }}/{{ post.time.day }}/{{ post.title }}">{{ post.title }}</a></h2>
+   	</p>
+   	<p>
+   		<span>Author:</span>
+   		<a href="/u/{{ post.name }}">{{ post.name }}</a>
+   	</p>
+   	<p><a href="#">{{ post.time.minute }}</a></p>
+      <p>
+         {% for tag in post.tags %}
+         {% if tag %}
+         <span><a href="/tags/{{ tag }}">{{ tag }}</a></span>
+         {% endif %}
+         {% endfor %}
+      </p>
+   	<p>{{ post.post }}</p>
+   </li>
+{% endfor %}
+</ul>
+{% endblock content %}

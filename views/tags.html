@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% extends 'page.html' %}
+{% extends 'search.html' %}
+{% block content %}
+<p>Welcome to {{title}}</p>
+<a href="/upload">上传图片</a>
+<a href="/post">发表文章</a>
+<ul>
+{% for tag in tags %}
+<span><a href="/tags/{ tag }">{{ tag }}</a></span>
+{% endfor %}
+</ul>
+{% endblock content %}

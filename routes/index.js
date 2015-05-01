@@ -304,6 +304,22 @@ router.get('/delete/:name/:day/:title', function(req, res) {
     res.redirect('/');
   });
 });
+//Tags
+router.get('/tags', function(req, res) {
+  Post.getTags(function(err, tags) {
+    if(err) {
+      req.flash('error', err);
+      return res.redirect('/');
+    }
+    res.render('tags', {
+      title: 'Tags',
+      tags: tags,
+      user: req.session.user,
+      success: req.flash('success').toString(),
+      error: req.flash('error').toString()
+    });
+  });
+});
 
 router.use(function (req, res) {
     res.render("404");

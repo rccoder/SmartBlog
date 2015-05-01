@@ -7,7 +7,9 @@
 </head>
 <body id="body">
     <header>
+        {% include './header.html' %}
         {% block search %}{% endblock search %}
+        <span><a href="/tags">Tag</a></span>
     </header>
     <nav>
     	{% if success %}

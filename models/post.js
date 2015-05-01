@@ -1,9 +1,10 @@
 var mongodb = require('./db');
 var markdown = require('markdown').markdown;
 
-function Post(name, title, post) {
+function Post(name, title, tags, post) {
   this.name = name,
   this.title = title,
+  this.tags = tags,
   this.post = post;
 }
 
@@ -17,12 +18,13 @@ Post.prototype.save = function(callback) {
     month: date.getFullYear() + '-' + (date.getMonth() + 1),
     day: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate(),
     minute: date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +
-      date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
+    date.getHours() + ":" + (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes())
   };
   var post = {
     name: this.name,
     time: time,
     title: this.title,
+    tags: this.tags,
     post: this.post,
     comments: []
   };

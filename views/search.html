@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+{% block search %}
+<form action="/search" method="get">
+	<input type="text" name="keyword">
+	<input type="submit" value="搜索">
+</form>
+{% endblock search %}

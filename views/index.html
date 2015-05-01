@@ -1,5 +1,5 @@
 {% extends 'layout.html' %}
-
+{% extends 'page.html' %}
 {% block content %}
 <p>Welcome to {{title}}</p>
 <a href="/upload">上传图片</a>
@@ -19,4 +19,4 @@
    </li>
 {% endfor %}
 </ul>
-{% endblock %}
+{% endblock content %}

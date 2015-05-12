@@ -26,7 +26,8 @@ Post.prototype.save = function(callback) {
     title: this.title,
     tags: this.tags,
     post: this.post,
-    comments: []
+    comments: [],
+    pv: 0
   };
   //console.log(post.time);
   mongodb.open(function(err, db) {
@@ -109,22 +110,36 @@ Post.getOne = function(name, day, title, callback) {
         return callback(err);
       }
       collection.findOne({
-        "name": name,
-        "time.day": day,
-        "title": title
+        'name': name,
+        'time.day': day,
+        'title': title
       }, function(err, doc) {
-        mongodb.close();
         if(err) {
+          mongodb.close();
           return callback(err);
         }
-        //doc.post = markdown.toHTML(doc.post);
-        //console.log(doc.comments);
-        if(doc.comments) {
-          doc.comments.forEach(function (comment) {
-            comment.content = markdown.toHTML(comment.content);
+        if(doc) {
+          collection.update({
+            'name': name,
+            'time.day': day,
+            'title': title
+          }, {
+            $inc: {'pv': 1}
+          }, function(err) {
+            mongodb.close();
+            if(err) {
+              return callback(err);
+            }
+          });
+          //doc.post = markdown.toHTML(doc.post);
+          //console.log(doc.comments);
+          if(doc.comments) {
+            doc.comments.forEach(function (comment) {
+              comment.content = markdown.toHTML(comment.content);
           });
         }
-        callback(null, doc);
+        callback(null, doc); 
+        }
       });
     });
   });

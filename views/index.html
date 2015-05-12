@@ -15,7 +15,8 @@
    		<span>Author:</span>
    		<a href="/u/{{ post.name }}">{{ post.name }}</a>
    	</p>
-   	<p><a href="#">{{ post.time.minute }}</a></p>
+   	<p><span>Time:</span><a href="#">{{ post.time.minute }}</a></p>
+      <p><span>PV：</span>{{ post.pv }}</p>
       <p>
          {% for tag in post.tags %}
          {% if tag %}

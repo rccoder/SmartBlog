@@ -2,9 +2,10 @@
 {% block comment %}
 <div>
 	{% for pc in post.comments %}
-{{ pc.name }}
-{{ pc.time }}
-{{ pc.content }}
+		{{ pc.name }}
+		<img src="{{ pc.head }}" alt="{{ pc.name }}" />
+		{{ pc.time }}
+		{{ pc.content }}
 	{% endfor %}
 </div>
 <form method="post">

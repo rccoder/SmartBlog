@@ -17,6 +17,7 @@
    	</p>
    	<p><span>Time:</span><a href="#">{{ post.time.minute }}</a></p>
       <p><span>PV:</span>{{ post.pv }}</p>
+       <p><span>Comment:</span>{{ post.comments.length }}</p>
       <p>
          {% for tag in post.tags %}
          {% if tag %}

@@ -14,7 +14,8 @@
    		<a href="/u/{{ post.name }}">{{ post.name }}</a>
    	</p>
    	<p><span>Time:</span><a href="#">{{ post.time.minute }}</a></p>
-      <p><span>PV</span>{{ post.pv }}</p>
+      <p><span>PV:</span>{{ post.pv }}</p>
+       <p><span>Comment:</span>{{ post.comments.length }}</p>
       <p>
          {% if (user && user.name == post.name) %}
          <span><a href="/edit/{{ post.name }}/{{ post.time.day }}/{{ post.title }}">Edit</a></span>
